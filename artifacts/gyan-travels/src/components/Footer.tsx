@@ -79,17 +79,17 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={16} className="text-primary shrink-0" />
-                <a href="tel:+917338461157" className="text-white/40 hover:text-primary text-sm transition-colors">+91 73384 61157</a>
+                <a href="tel:+917349549367" className="text-white/40 hover:text-primary text-sm transition-colors">+91 73495 49367</a>
               </li>
               <li className="flex items-center gap-3">
                 <SiWhatsapp size={16} className="text-green-400 shrink-0" />
                 <a
-                  href="https://wa.me/917338461157"
+                  href="https://wa.me/917349549367"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/40 hover:text-green-400 text-sm transition-colors"
                 >
-                  Chat on WhatsApp
+                  +91 73495 49367
                 </a>
               </li>
               <li className="flex items-center gap-3">

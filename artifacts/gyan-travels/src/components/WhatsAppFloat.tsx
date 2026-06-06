@@ -4,7 +4,7 @@ import { SiWhatsapp } from "react-icons/si";
 export function WhatsAppFloat() {
   return (
     <motion.a
-      href="https://wa.me/917338461157?text=Hi%20Gyan%20Travels!%20I%20want%20to%20know%20more%20about%20your%20services."
+      href="https://wa.me/917349549367?text=Hi%20Gyan%20Travels!%20I%20want%20to%20know%20more%20about%20your%20services."
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
