@@ -48,7 +48,13 @@ router.post("/waitlist", async (req, res) => {
     const [entry] = await db
       .insert(waitlistTable)
       .values({ email, name: name ?? null })
+      .onConflictDoNothing({ target: waitlistTable.email })
       .returning();
+
+    if (!entry) {
+      res.status(400).json({ error: "This email is already on the waitlist" });
+      return;
+    }
 
     sendNotificationEmail(name, email).catch((err) => {
       req.log.warn({ err }, "Failed to send notification email");
@@ -56,17 +62,8 @@ router.post("/waitlist", async (req, res) => {
 
     res.status(201).json(entry);
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    const isDuplicate =
-      (err as { code?: string })?.code === "23505" ||
-      message.includes("duplicate key") ||
-      message.includes("unique constraint");
-    if (isDuplicate) {
-      res.status(400).json({ error: "This email is already on the waitlist" });
-    } else {
-      req.log.error({ err }, "Error inserting into waitlist");
-      res.status(500).json({ error: "Internal server error" });
-    }
+    req.log.error({ err }, "Error inserting into waitlist");
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
