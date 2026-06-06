@@ -32,7 +32,11 @@ export function Waitlist() {
             EMAILJS_TEMPLATE_ID,
             { from_name: name || "No name provided", from_email: email },
             { publicKey: EMAILJS_PUBLIC_KEY }
-          ).catch(() => {});
+          ).then((res) => {
+            console.log("EmailJS success:", res.status, res.text);
+          }).catch((err) => {
+            console.error("EmailJS error:", JSON.stringify(err));
+          });
 
           setName("");
           setEmail("");
