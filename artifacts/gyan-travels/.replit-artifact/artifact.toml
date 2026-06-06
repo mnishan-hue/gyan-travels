@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Gyan Travels"
+version = "1.0.0"
+id = "artifacts/gyan-travels"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19674
+
+[services.development]
+run = "pnpm --filter @workspace/gyan-travels run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gyan-travels", "run", "build" ]
+publicDir = "artifacts/gyan-travels/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19674"
+BASE_PATH = "/"
