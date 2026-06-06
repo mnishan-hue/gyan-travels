@@ -11,12 +11,13 @@ async function sendNotificationEmail(name: string | undefined, email: string) {
   if (!apiKey) return;
   const resend = new Resend(apiKey);
   await resend.emails.send({
-    from: "Gyan Travels <onboarding@resend.dev>",
-    to: process.env.GMAIL_USER || "hellogyantravels@gmail.com",
+    from: "Gyan Travels <hello@gyanbus.in>",
+    to: "hellogyantravels@gmail.com",
     subject: "New Waitlist Signup — Gyan Travels",
     html: `
       <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px;border:1px solid #eee;border-radius:8px;">
-        <h2 style="color:#f5a623;margin-top:0;">🚌 New Waitlist Signup</h2>
+        <img src="https://www.gyanbus.in/gt-logo.png" alt="Gyan Travels" style="height:80px;margin-bottom:16px;display:block;" />
+        <h2 style="color:#f5a623;margin-top:0;">New Waitlist Signup</h2>
         <p><strong>Name:</strong> ${name || "Not provided"}</p>
         <p><strong>Email:</strong> ${email}</p>
         <hr style="border:none;border-top:1px solid #eee;"/>
