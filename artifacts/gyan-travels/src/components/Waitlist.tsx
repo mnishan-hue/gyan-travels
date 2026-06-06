@@ -8,7 +8,7 @@ import { WaitlistSuccessModal } from "./WaitlistSuccessModal";
 import emailjs from "@emailjs/browser";
 
 const EMAILJS_SERVICE_ID = "service_wv1mdlj";
-const EMAILJS_TEMPLATE_ID = "template_znvjurk";
+const EMAILJS_TEMPLATE_ID = "template_g4fz0lv";
 const EMAILJS_PUBLIC_KEY = "G0L_f14c4wUftmNRc";
 
 export function Waitlist() {
