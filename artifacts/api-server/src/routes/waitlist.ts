@@ -2,26 +2,17 @@ import { Router } from "express";
 import { db, waitlistTable } from "@workspace/db";
 import { count } from "drizzle-orm";
 import { JoinWaitlistBody } from "@workspace/api-zod";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 const router = Router();
 
-function createTransporter() {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD;
-  if (!user || !pass) return null;
-  return nodemailer.createTransport({
-    service: "gmail",
-    auth: { user, pass },
-  });
-}
-
 async function sendNotificationEmail(name: string | undefined, email: string) {
-  const transporter = createTransporter();
-  if (!transporter) return;
-  await transporter.sendMail({
-    from: `"Gyan Travels" <${process.env.GMAIL_USER}>`,
-    to: process.env.GMAIL_USER,
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return;
+  const resend = new Resend(apiKey);
+  await resend.emails.send({
+    from: "Gyan Travels <onboarding@resend.dev>",
+    to: process.env.GMAIL_USER || "hellogyantravels@gmail.com",
     subject: "New Waitlist Signup — Gyan Travels",
     html: `
       <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px;border:1px solid #eee;border-radius:8px;">
@@ -41,25 +32,20 @@ router.post("/waitlist", async (req, res) => {
     res.status(400).json({ error: "Invalid email address" });
     return;
   }
-
   const { email, name } = parsed.data;
-
   try {
     const [entry] = await db
       .insert(waitlistTable)
       .values({ email, name: name ?? null })
       .onConflictDoNothing({ target: waitlistTable.email })
       .returning();
-
     if (!entry) {
       res.status(400).json({ error: "This email is already on the waitlist" });
       return;
     }
-
     sendNotificationEmail(name, email).catch((err) => {
       req.log.warn({ err }, "Failed to send notification email");
     });
-
     res.status(201).json(entry);
   } catch (err: unknown) {
     req.log.error({ err }, "Error inserting into waitlist");
