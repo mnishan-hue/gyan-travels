@@ -5,11 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useJoinWaitlist, useGetWaitlistCount, getGetWaitlistCountQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { WaitlistSuccessModal } from "./WaitlistSuccessModal";
-import emailjs from "@emailjs/browser";
-
-const EMAILJS_SERVICE_ID = "service_wv1mdlj";
-const EMAILJS_TEMPLATE_ID = "template_g4fz0lv";
-const EMAILJS_PUBLIC_KEY = "G0L_f14c4wUftmNRc";
 
 export function Waitlist() {
   const queryClient = useQueryClient();
@@ -24,20 +19,9 @@ export function Waitlist() {
     e.preventDefault();
     if (!email) return;
     joinMutation.mutate(
-      { data: { email } },
+      { data: { email, name: name || undefined } },
       {
         onSuccess: () => {
-          emailjs.send(
-            EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_ID,
-            { from_name: name || "No name provided", from_email: email },
-            { publicKey: EMAILJS_PUBLIC_KEY }
-          ).then((res) => {
-            console.log("EmailJS success:", res.status, res.text);
-          }).catch((err) => {
-            console.error("EmailJS error:", JSON.stringify(err));
-          });
-
           setName("");
           setEmail("");
           queryClient.invalidateQueries({ queryKey: getGetWaitlistCountQueryKey() });

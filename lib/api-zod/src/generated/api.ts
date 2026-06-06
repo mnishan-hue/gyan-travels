@@ -21,7 +21,8 @@ export const HealthCheckResponse = zod.object({
  * @summary Join the waitlist
  */
 export const JoinWaitlistBody = zod.object({
-  "email": zod.string().email()
+  "email": zod.string().email(),
+  "name": zod.string().optional()
 })
 
 

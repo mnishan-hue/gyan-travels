@@ -4,6 +4,7 @@ import { z } from "zod/v4";
 
 export const waitlistTable = pgTable("waitlist", {
   id: serial("id").primaryKey(),
+  name: text("name"),
   email: text("email").unique().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

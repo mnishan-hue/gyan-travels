@@ -8,4 +8,5 @@
 
 export interface WaitlistInput {
   email: string;
+  name?: string;
 }

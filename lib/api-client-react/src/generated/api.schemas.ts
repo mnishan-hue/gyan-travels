@@ -18,6 +18,7 @@ export interface WaitlistEntry {
 
 export interface WaitlistInput {
   email: string;
+  name?: string;
 }
 
 export interface WaitlistCount {
