@@ -108,6 +108,9 @@ export function Footer() {
             <span className="text-primary">Made with Excellence in India</span>
           </div>
         </div>
+        <div className="pt-3 text-center text-white/20 text-xs">
+          Website crafted by M N · <a href="tel:+919353995417" className="hover:text-white/40 transition-colors">9353995417</a>
+        </div>
       </div>
     </footer>
   );
